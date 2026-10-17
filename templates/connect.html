@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect GoPro</title>
+  <script>
+    const savedTheme = localStorage.getItem("gopro-theme") || {{ theme|tojson }};
+    document.documentElement.dataset.theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/connect.css') }}">
+</head>
+<body>
+<main><section class="card">
+  <h1>Settings</h1>
+  <p>Camera connection and application folders.</p>
+  <section class="settings-group" aria-labelledby="connection-title">
+    <div class="connection-heading">
+      <h2 id="connection-title">Camera Connection</h2>
+      <span id="connected-device" hidden></span>
+      <button id="pairing-help-open" class="help-button" type="button" title="How to enable pairing" aria-label="How to enable Bluetooth pairing">
+        <span class="ui-icon icon-help" aria-hidden="true"></span>
+      </button>
+    </div>
+    <section id="device-step">
+      <div id="status" role="status" hidden></div>
+      <p id="scan-status">Searching for nearby GoPro cameras over Bluetooth…</p>
+      <label id="device-label" for="device-trigger" hidden>Found cameras</label>
+      <div class="ble-device-picker">
+        <select id="device" hidden></select>
+        <button id="rescan" type="button" class="secondary" title="Scan again" aria-label="Scan again">
+          <span class="ui-icon icon-refresh" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div id="manual-device" hidden>
+        <p>No cameras found. Enable Bluetooth and pairing mode on your GoPro, then scan again or enter the last four characters of its serial number.</p>
+        <label for="target">Last 4 characters of the serial number</label>
+        <input id="target" autocomplete="off" maxlength="4" placeholder="For example, 6338">
+      </div>
+      <button id="connect-ble" type="button" disabled>Connect over Bluetooth</button>
+    </section>
+    <section id="wifi-step" hidden>
+      <h3>Set Up Wi-Fi</h3>
+      <p id="wifi-scan-status" role="status" aria-live="polite">Scanning for Wi-Fi networks…</p>
+      <label for="wifi-network-trigger">Available Wi-Fi networks</label>
+      <div class="wifi-network-picker">
+        <select id="wifi-network">
+          <option value="">Select a network</option>
+        </select>
+        <button id="scan-wifi" type="button" class="secondary" title="Scan for networks again" aria-label="Scan for networks again">
+          <span class="ui-icon icon-refresh" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div id="manual-ssid-group" hidden>
+        <label for="ssid">Or enter the SSID manually</label>
+        <input id="ssid" autocomplete="off" placeholder="Name of a hidden or unlisted network">
+      </div>
+      <label for="password">Wi-Fi Password</label>
+      <input id="password" type="password" autocomplete="new-password" placeholder="Leave blank for a saved or open network">
+      <div class="wifi-actions">
+        <button id="submit" type="button">Connect</button>
+        <button id="skip-wifi" type="button" class="secondary">Continue without changing Wi-Fi</button>
+      </div>
+    </section>
+  </section>
+  <section id="app-settings" class="settings-group" aria-labelledby="folders-title">
+    <h2 id="folders-title">Folders</h2>
+    <label for="output-dir">Configuration Folder</label>
+    <div class="directory-picker"><input id="output-dir" value="{{ cohn_dir }}"><button id="choose-config-dir" type="button" class="secondary" title="Choose folder" aria-label="Choose configuration folder"><span class="ui-icon icon-folder-open" aria-hidden="true"></span></button></div>
+    <label for="media-dir">Download Folder</label>
+    <div class="directory-picker"><input id="media-dir" value="media"><button id="choose-dir" type="button" class="secondary" title="Choose folder" aria-label="Choose download folder"><span class="ui-icon icon-folder-open" aria-hidden="true"></span></button></div>
+  </section>
+</section></main>
+<dialog id="pairing-help-dialog" aria-labelledby="pairing-help-title">
+  <h2 id="pairing-help-title">Connect Your Camera over Bluetooth</h2>
+  <p>Turn on your camera and open its device pairing screen so the app can find it:</p>
+  <ul>
+    <li>On GoPro models with a touchscreen, open the dashboard, go to <strong>Connections</strong>, then choose <strong>Connect Device</strong> or <strong>Pair Device</strong>.</li>
+    <li>If the camera asks for a connection type, choose <strong>GoPro Quik</strong>. On models with a settings menu, the path is usually <strong>Preferences → Connections → Connect Device → GoPro Quik</strong>.</li>
+  </ul>
+  <p>Menu names and locations vary by model and firmware. Leave the camera on its pairing screen, return here, click the refresh icon, and select your GoPro. Do not pair the camera through your operating system’s Bluetooth settings.</p>
+  <p>COHN, which connects the camera to your home Wi-Fi network for HTTPS access, is supported on <strong>HERO12 Black, HERO13 Black, MAX 2, Mission 1, and Mission 1 Pro</strong>. Open GoPro requires compatible firmware, and feature availability varies by model.</p>
+  <button id="pairing-help-close" type="button" class="secondary">Got it</button>
+</dialog>
+<script id="connect-config" type="application/json">{{ {"media_dir": media_dir, "wifi_ssid": wifi_ssid, "cohn_dir": cohn_dir}|tojson }}</script>
+<script type="module" src="{{ url_for('static', filename='js/connect.js') }}"></script>
+</body>
+</html>

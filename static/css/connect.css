@@ -1,0 +1,337 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  width: 100%;
+  margin: 0;
+  padding: 12px;
+}
+
+.card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: -.3px;
+}
+
+p {
+  color: var(--muted);
+  margin: 7px 0 20px;
+}
+
+label {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  margin: 13px 0 5px;
+}
+
+input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 9px 10px;
+  background: var(--field);
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+}
+
+input:focus {
+  border-color: #5796c8;
+  box-shadow: 0 0 0 3px #1769aa20;
+}
+
+#password:disabled {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--subtle);
+  color: var(--muted);
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.settings-group {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.settings-group h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.settings-group h3 {
+  margin: 12px 0 4px;
+  font-size: 14px;
+}
+
+.connection-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.connection-heading h2 {
+  flex: none;
+  margin: 0;
+}
+
+#connected-device {
+  min-width: 0;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.connection-heading > .help-button {
+  margin-left: auto;
+  flex: none;
+}
+
+.connection-heading .help-button[hidden] {
+  display: none;
+}
+
+.ble-device-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ble-device-picker > .app-dropdown {
+  min-width: 0;
+  flex: 1;
+}
+
+#rescan {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.help-button {
+  width: 30px;
+  height: 30px;
+  min-height: 30px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: transparent;
+  margin: 0;
+}
+
+.help-button:hover {
+  color: var(--ink);
+  background: var(--subtle);
+}
+
+.ui-icon {
+  display: block;
+  width: 19px;
+  height: 19px;
+  background: currentColor;
+  mask: center / contain no-repeat;
+}
+
+.icon-help {
+  mask-image: url('/static/icons/circle-question-mark.svg');
+}
+
+.icon-refresh {
+  mask-image: url('/static/icons/rotate-cw.svg');
+}
+
+.icon-folder-open {
+  mask-image: url('/static/icons/folder-open.svg');
+}
+
+.wifi-network-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wifi-network-picker > .app-dropdown {
+  min-width: 0;
+  flex: 1;
+}
+
+.wifi-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.wifi-actions button {
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+}
+
+#scan-wifi {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+#pairing-help-dialog {
+  width: min(440px, calc(100% - 32px));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  color: var(--ink);
+  background: var(--panel);
+  box-shadow: 0 12px 40px var(--shadow);
+}
+
+#pairing-help-dialog::backdrop {
+  background: #10182080;
+}
+
+#pairing-help-dialog h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+#pairing-help-dialog p {
+  margin: 8px 0;
+}
+
+#pairing-help-dialog ul {
+  padding-left: 20px;
+  margin: 12px 0;
+}
+
+#pairing-help-dialog li + li {
+  margin-top: 8px;
+}
+
+.directory-picker {
+  display: flex;
+  gap: 8px;
+}
+
+.directory-picker input {
+  min-width: 0;
+  flex: 1;
+}
+
+.directory-picker button {
+  height: 42px;
+  min-height: 42px;
+  width: 42px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  flex: none;
+  margin: 0;
+}
+
+.hint {
+  font-size: 12px;
+  margin: 10px 0 16px;
+}
+
+button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 14px;
+  color: #fff;
+  background: var(--blue);
+  font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  cursor: pointer;
+  margin: 6px 6px 0 0;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+button:hover {
+  background: var(--blue-hover);
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+
+button.secondary {
+  color: var(--subtle-ink);
+  background: var(--secondary-bg);
+  border: 1px solid var(--secondary-border);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--secondary-hover);
+  border-color: var(--secondary-hover);
+}
+
+button.secondary:active:not(:disabled) {
+  background: var(--secondary-active);
+  border-color: var(--secondary-active);
+}
+
+button.secondary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue) 24%, transparent);
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+button.secondary:disabled {
+  color: var(--secondary-disabled-ink);
+  background: var(--secondary-disabled-bg);
+  border-color: var(--secondary-border);
+  opacity: 1;
+}
+
+#status {
+  margin: 0 0 10px;
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#status.success {
+  color: var(--green);
+}
+
+#status.error {
+  color: var(--red);
+}

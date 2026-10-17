@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GoPro Downloader</title>
+  <script>
+    const savedTheme = localStorage.getItem("gopro-theme") || {{ theme|tojson }};
+    document.documentElement.dataset.theme = savedTheme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<main>
+  <header>
+    <div><h1>GoPro Downloader</h1></div>
+    <div class="header-actions">
+      <span id="camera-battery-status" class="camera-battery-status" role="status" aria-label="Camera battery level unavailable" title="Camera battery level unavailable">
+        <span class="ui-icon camera-battery-icon" aria-hidden="true"></span>
+      </span>
+      <span id="camera-bluetooth-status" class="camera-bluetooth-status" role="status" aria-label="Camera is unavailable over Bluetooth" title="Camera is unavailable over Bluetooth">
+        <span class="ui-icon camera-bluetooth-icon" aria-hidden="true"></span>
+      </span>
+      <span id="camera-wifi-status" class="camera-wifi-status" role="status" aria-label="Camera is unavailable over Wi-Fi" title="Camera is unavailable over Wi-Fi">
+        <span class="ui-icon camera-wifi-icon" aria-hidden="true"></span>
+      </span>
+      <button id="theme-toggle" class="secondary" aria-label="Enable dark theme">
+        <span class="ui-icon theme-icon" aria-hidden="true"></span>
+      </button>
+      <button id="refresh" class="secondary" title="Refresh media list" aria-label="Refresh media list">
+        <span class="ui-icon icon-refresh" aria-hidden="true"></span>
+      </button>
+      <button id="settings" class="secondary" title="Settings" aria-label="Settings">
+        <span class="ui-icon icon-settings" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="media-card">
+    <div class="selection-toolbar">
+      <label class="select-all-label"><input id="select-all-files" type="checkbox"> Select all</label>
+      <button id="download-selected" type="button" disabled>
+        <span class="ui-icon icon-download" aria-hidden="true"></span>
+        <span>Download selected</span>
+      </button>
+    </div>
+    <div class="table-wrap"><table><tbody id="files"></tbody></table></div>
+    <div class="progress-row"><progress id="progress" max="100" value="0"></progress><span id="progress-text">Waiting</span><button id="cancel" hidden disabled>Cancel</button></div>
+    <div id="status" role="status">Ready</div>
+  </section>
+
+</main>
+<dialog id="details-dialog">
+  <h2 id="details-title">File Information</h2>
+  <dl id="details-list"></dl>
+  <div class="actions"><button id="details-close" class="secondary">Close</button></div>
+</dialog>
+<dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-message">
+  <h2 id="delete-title">Delete file?</h2>
+  <p id="delete-message"></p>
+  <div class="actions">
+    <button id="delete-cancel" class="secondary" type="button">Cancel</button>
+    <button id="delete-confirm" class="danger" type="button">Delete</button>
+  </div>
+</dialog>
+<script id="app-config" type="application/json">{{ {"media_dir": media_dir, "auto_refresh": auto_refresh, "cohn_dir": cohn_dir}|tojson }}</script>
+<script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

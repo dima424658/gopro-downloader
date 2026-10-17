@@ -1,0 +1,7 @@
+# Upstream PR #918 fixes AccessPointFeature.connect() raising
+# TypeError: 'coroutine' object is not callable during Wi-Fi scanning.
+open-gopro @ git+https://github.com/gopro/OpenGoPro.git@refs/pull/918/head#subdirectory=demos/python/sdk_wireless_camera_control
+Flask>=3.1,<4
+pywebview[qt]>=6.2,<7; sys_platform == "linux"
+pywebview>=6.2,<7; sys_platform != "linux"
+desktop-notifier>=6.2,<7
